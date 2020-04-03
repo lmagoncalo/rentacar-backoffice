@@ -7,6 +7,11 @@ import json
 app = Flask(__name__)
 CORS(app)
 
+@app.route('/', methods=['GET'])
+  def index():
+    return 'Congratulations! Your first endpoint is workin'
+
+
 @app.route('/rentacar/email', methods = ['POST'])
 def sendmail():
 	name = request.json['name']
