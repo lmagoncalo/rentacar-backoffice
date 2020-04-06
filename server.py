@@ -17,21 +17,27 @@ def index():
 def sendmail():
 	name = request.json['name']
 	email = request.json['email']
-	car_type = request.json['car_type']
+	car_types = request.json['car_types']
 	start_date = request.json['start_date']
 	end_date = request.json['end_date']
 	message = request.json['message']
 
-	if car_type == "1":
-		car_name = "Pequeno utilitário";
-	elif car_type == "2":
-		car_name = "Utilitário";
-	elif car_type == "3":
-		car_name = "Utilitário económico";
-	elif car_type == "4":
-		car_name = "Carrinha";
-	elif car_type == "5":
-		car_name = "Monovolume";
+	car_list = car_types.split(",")
+	car_name = ""
+	for i, car in enumerate(car_list):
+		if car == "1":
+			car_name += "Pequeno utilitário";
+		elif car == "2":
+			car_name += "Utilitário";
+		elif car == "3":
+			car_name += "Utilitário económico";
+		elif car == "4":
+			car_name += "Carrinha";
+		elif car == "5":
+			car_name += "Monovolume";
+
+		if i != len(car_list) - 1:
+			car_name += ", "
 
 	body = "Tipo de carro: " + car_name + "<br/>";
 	body += "Data: " + start_date + " até " + end_date + "<br/>";
@@ -50,7 +56,6 @@ def sendmail():
 		return json.dumps({'success':True}), 200, {'ContentType':'application/json'}
 	else:
 		return json.dumps({'error':True}), 500, {'ContentType':'application/json'}
-
 
 
 if __name__ == '__main__':
